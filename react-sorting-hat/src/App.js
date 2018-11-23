@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import { Route, Link } from "react-router-dom";
+import { createGlobalStyle } from "styled-components";
+import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import Sorting from "./components/Sorting";
 

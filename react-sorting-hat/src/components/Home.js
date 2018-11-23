@@ -1,9 +1,8 @@
-import React, { Fragment } from "react";
+import React from "react";
 import styled from "styled-components";
 import img from "../images/train.jpg";
 import hat from "../images/sortingHat.png";
 import { Link } from "react-router-dom";
-// font-family: 'Amita', cursive;
 
 const StyledApp = styled.div`
   text-align: center;
@@ -72,6 +71,7 @@ const StyledButton = styled.button`
   font-family: "Cinzel", serif;
   font-weight: 700;
   letter-spacing: 3px;
+  overflow: hidden;
 
   &:hover {
     background: yellow;
