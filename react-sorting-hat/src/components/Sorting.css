@@ -1,0 +1,7 @@
+.radio-button::after {
+  opacity: 0;
+}
+
+.form-input:checked ~ .form-label .radio-button::after {
+  opacity: 1;
+}

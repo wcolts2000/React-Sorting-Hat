@@ -4,6 +4,7 @@ import styled from "styled-components";
 import studyhall from "../images/study.jpg";
 import book from "../images/book.png";
 import quill from "../images/quill.svg";
+import './Sorting.css'
 
 const SortingContainer = styled.div`
   background-image: url(${studyhall});
@@ -61,7 +62,47 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  font-size: 1.8rem;
+  display: none;
+`;
+
+const FormGroup = styled.div`
+  width: 100%;
+  display: inline-block;
+`;
+
+const FormLabel = styled.label`
+  font-size: 1.4rem;
+  font-family: "Amita", cursive;
+  color: darkred;
+  position: relative;
+  padding-left: 2.5rem;
+  text-decoration: underline;
+  cursor: url(${quill}), auto;
+`;
+
+const Span = styled.span`
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 5px solid darkred;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  left: 0.5rem;
+  top: .5rem;
+
+  &::after {
+    height: .5rem;
+    width: .5rem;
+    content: "";
+    display: block;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    background-color: darkred;
+    transition: opacity 0.2s;
+  }
 `;
 
 export default class Sorting extends Component {
@@ -85,11 +126,34 @@ export default class Sorting extends Component {
             impedit a, doloribus velit incidunt officia? Earum, reprehenderit!
           </Question>
           <Form>
-            <Input type="radio" name="gender" value="male" checked /> Male
-            <br />
-            <Input type="radio" name="gender" value="female" /> Female
-            <br />
-            <Input type="radio" name="gender" value="other" /> Other
+            <FormGroup>
+              <Input type="radio" name="answer" id="answer1" className="form-input" />
+              <FormLabel htmlFor="answer1" className="form-label">
+                <Span className="radio-button"></Span>
+                Answer 1 blah blah blah blah
+              </FormLabel>
+            </FormGroup>
+            <FormGroup>
+              <Input type="radio" name="answer" id="answer2"className="form-input" />
+              <FormLabel htmlFor="answer2" className="form-label">
+                <Span className="radio-button"></Span>
+                Answer 2
+              </FormLabel>
+            </FormGroup>
+            <FormGroup>
+              <Input type="radio" name="answer" id="answer3" className="form-input" />
+              <FormLabel htmlFor="answer3" className="form-label">
+                <Span className="radio-button"></Span>
+                Answer 3
+              </FormLabel>
+            </FormGroup>
+            <FormGroup>
+              <Input type="radio" name="answer" id="answer4" className="form-input" />
+              <FormLabel htmlFor="answer4" className="form-label">
+                <Span className="radio-button"></Span>
+                Answer 4
+              </FormLabel>
+            </FormGroup>
           </Form>
         </Book>
         <a
