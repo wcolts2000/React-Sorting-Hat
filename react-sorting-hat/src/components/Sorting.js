@@ -5,6 +5,11 @@ import studyhall from "../images/study.jpg";
 import book from "../images/book.png";
 import quill from "../images/quill.svg";
 import './Sorting.css'
+import gryffindor from '../images/gryffindorCrest.png';
+import hufflepuff from '../images/hufflepuffCrest.png';
+import ravenclaw from '../images/ravenclawCrest.png';
+import slytherin from '../images/slytherinCrest.png';
+
 
 const SortingContainer = styled.div`
   background-image: url(${studyhall});
@@ -35,13 +40,13 @@ const Book = styled.div`
   background-image: url(${book});
   width: 700px;
   height: 526px;
-  padding: 2rem 3rem;
+  padding: 2rem 5rem;
   display: flex;
   justify-content: space-between;
   background-position: center center;
   background-size: contain;
   align-self: center;
-  margin-bottom: 5rem;
+  margin-bottom: 0rem;
   background-repeat: no-repeat;
   cursor: url(${quill}), auto;
 
@@ -51,7 +56,7 @@ const Book = styled.div`
 `;
 
 const Question = styled.div`
-  width: 50%;
+  width: 45%;
   font-size: 1.2rem;
   color: darkred;
   font-family: "Amita", cursive;
@@ -102,22 +107,70 @@ const Span = styled.span`
     transform: translate(50%, -50%);
     background-color: darkred;
     transition: opacity 0.2s;
+`;
+
+const Crests = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 30rem;
+  margin: 0 auto;
+  height: 16vh;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding-top: 1rem;
+
+  p {
+    width: 25%;
+    text-shadow: -1px 2px 2px rgba(0, 0, 0, 0.8),
+      -2px 3px 2px rgba(0, 0, 0, 0.7), -3px 4px 3px rgba(0, 0, 0, 0.6),
+      -4px 4px 3px rgba(0, 0, 0, 0.5), -5px 5px 4px rgba(0, 0, 0, 0.4),
+      -6px 5px 4px rgba(0, 0, 0, 0.3);
   }
+`;
+
+const StyledImg = styled.img`
+  object-fit: contain;
+  display: inline-block;
+  width: 80px;
+`;
+
+const Points = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 30rem;
+  margin: 0 auto;
+  height: 5vh;
+  font-size: 1.4rem;
+  color: yellow;
+  flex-wrap: wrap;
+  align-items: flex-start;
 `;
 
 export default class Sorting extends Component {
   constructor() {
     super();
     this.state = {
-      huffelpuff: 0,
+      hufflepuff: 0,
       ravenclaw: 0,
-      grifindoor: 0,
-      slitherin: 0
+      gryffindor: 0,
+      slytherin: 0
     };
   }
   render() {
     return (
       <SortingContainer>
+        <Crests>
+          <StyledImg src={gryffindor} alt="gryffindor crest"/>
+          <StyledImg src={hufflepuff} alt="hufflepuff crest"/>
+          <StyledImg src={slytherin} alt="slytherin crest"/>
+          <StyledImg src={ravenclaw} alt="ravenclaw crest"/>
+        </Crests>
+        <Points>
+          <p>{this.state.gryffindor}</p>
+          <p>{this.state.hufflepuff}</p>
+          <p>{this.state.slytherin}</p>
+          <p>{this.state.ravenclaw}</p>
+        </Points>
         <Book>
           <Question>
             What will you answer? Lorem ipsum dolor sit amet consectetur
