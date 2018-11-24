@@ -42,3 +42,5 @@ const sortingQuestions = {
     h: "The Just",
   },
 }
+
+export default sortingQuestions;
