@@ -9,7 +9,13 @@ import gryffindor from '../images/gryffindorCrest.png';
 import hufflepuff from '../images/hufflepuffCrest.png';
 import ravenclaw from '../images/ravenclawCrest.png';
 import slytherin from '../images/slytherinCrest.png';
+import sortingQuestions from './QuestionsData';
 
+
+
+// ====================
+// Styled Components
+// ====================
 
 const SortingContainer = styled.div`
   background-image: url(${studyhall});
@@ -146,17 +152,77 @@ const Points = styled.div`
   align-items: flex-start;
 `;
 
+const Button = styled.button`
+  font-family: "Cinzel", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 1px solid black;
+  color: black;
+  align-self: center;
+  outline: none;
+  background: wheat;
+  padding: 20px;
+  transition: all .3s ease-in;
+  display: inline-block;
+
+  &:hover {
+    background: yellow;
+    color: black;
+    transform: translateY(-3px);
+    box-shadow: -1px 2px 7px rgba(0,0,0,0.3), -2px 3px 7px rgba(0,0,0,0.3);
+  }
+
+  &:active {
+    transform: translateY(-1px);
+    box-shadow: -1px 2px 6px rgba(0,0,0,0.4), -2px 3px 6px rgba(0,0,0,0.4)
+  }
+`;
+
+// ====================
+// Globals
+// ====================
+
+const questions = sortingQuestions;
+
+// ====================
+// Component
+// ====================
+
 export default class Sorting extends Component {
   constructor() {
     super();
     this.state = {
-      hufflepuff: 0,
-      ravenclaw: 0,
-      gryffindor: 0,
-      slytherin: 0
+      'questions': questions,
+      'questionNumber': 0,
+      'hufflepuff': 0,
+      'ravenclaw': 0,
+      'gryffindor': 0,
+      'slytherin': 0
     };
   }
+
+  // componentDidUpdate = () => {
+  //   const sortingForm = document.getElementById('form');
+  //   // if(this.state.questionNumber <= 5) sortingForm.reset();
+  //   if(sortingForm)return sortingForm.reset();
+  //   return null
+  // }
+  
+
+  handleSelection = e => {
+    const sortingForm = document.getElementById('form');
+    console.log(e.target);
+    const answer = e.target.id
+    e.target.selected=false
+    this.setState(prevState => ({
+      'questionNumber': Number(prevState.questionNumber+1),
+      [answer]: Number(prevState[answer]+1),
+    }))
+  }
+
   render() {
+    // console.log(Object.values(this.state.questions)[this.state.questionNumber].question);
+    if(this.state.questionNumber <= 5 )
     return (
       <SortingContainer>
         <Crests>
@@ -173,38 +239,35 @@ export default class Sorting extends Component {
         </Points>
         <Book>
           <Question>
-            What will you answer? Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Unde cum amet similique iste dolore architecto
-            distinctio libero consectetur dicta voluptatum corporis magni
-            impedit a, doloribus velit incidunt officia? Earum, reprehenderit!
+            {Object.values(this.state.questions)[this.state.questionNumber].question}
           </Question>
-          <Form>
+          <Form onChange={this.handleSelection} name="answer" id="form">
             <FormGroup>
-              <Input type="radio" name="answer" id="answer1" className="form-input" />
-              <FormLabel htmlFor="answer1" className="form-label">
+              <Input type="radio" checked={false} name="answer" id="ravenclaw" className="form-input" refs="ravenclaw" />
+              <FormLabel htmlFor="ravenclaw" className="form-label" ref="ravenclaw">
                 <Span className="radio-button"></Span>
-                Answer 1 blah blah blah blah
+              {Object.values(this.state.questions)[this.state.questionNumber].r}
               </FormLabel>
             </FormGroup>
             <FormGroup>
-              <Input type="radio" name="answer" id="answer2"className="form-input" />
-              <FormLabel htmlFor="answer2" className="form-label">
+              <Input type="radio" checked={false} name="answer" id="gryffindor"className="form-input" ref="gryffindor" />
+              <FormLabel htmlFor="gryffindor" className="form-label">
                 <Span className="radio-button"></Span>
-                Answer 2
+                {Object.values(this.state.questions)[this.state.questionNumber].g}
               </FormLabel>
             </FormGroup>
             <FormGroup>
-              <Input type="radio" name="answer" id="answer3" className="form-input" />
-              <FormLabel htmlFor="answer3" className="form-label">
+              <Input type="radio" checked={false} name="answer" id="hufflepuff" className="form-input" ref="hufflepuff" />
+              <FormLabel htmlFor="hufflepuff" className="form-label">
                 <Span className="radio-button"></Span>
-                Answer 3
+                {Object.values(this.state.questions)[this.state.questionNumber].h}
               </FormLabel>
             </FormGroup>
             <FormGroup>
-              <Input type="radio" name="answer" id="answer4" className="form-input" />
-              <FormLabel htmlFor="answer4" className="form-label">
+              <Input type="radio" checked={false} name="answer" id="slytherin" className="form-input" ref="slytherin" />
+              <FormLabel htmlFor="slytherin" className="form-label">
                 <Span className="radio-button"></Span>
-                Answer 4
+                {Object.values(this.state.questions)[this.state.questionNumber].s}
               </FormLabel>
             </FormGroup>
           </Form>
@@ -218,6 +281,35 @@ export default class Sorting extends Component {
           Image from Harry Potter Sounds Ambient Mixer
         </a>
       </SortingContainer>
-    );
+    ); else {
+      const houseArr = [`${this.state.gryffindor}gryffindor`, `${this.state.hufflepuff}hufflepuff`, `${this.state.slytherin}slytherin`, `${this.state.ravenclaw}ravenclaw`];
+      console.log(houseArr);
+      
+      return (
+    <SortingContainer>
+        <Crests>
+          <StyledImg src={gryffindor} alt="gryffindor crest"/>
+          <StyledImg src={hufflepuff} alt="hufflepuff crest"/>
+          <StyledImg src={slytherin} alt="slytherin crest"/>
+          <StyledImg src={ravenclaw} alt="ravenclaw crest"/>
+        </Crests>
+        <Points>
+          <p>{this.state.gryffindor}</p>
+          <p>{this.state.hufflepuff}</p>
+          <p>{this.state.slytherin}</p>
+          <p>{this.state.ravenclaw}</p>
+        </Points>
+        <Book>
+          <Button>Your House Awaits</Button>
+        </Book>
+        <a
+          className="wallpaper-link"
+          href="https://harry-potter-sounds.ambient-mixer.com/images_template/7/5/a/75a04e9fe12e17379e429cf11bf9f298_full.jpg"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Image from Harry Potter Sounds Ambient Mixer
+        </a>
+      </SortingContainer>)}
   }
 }

@@ -16,8 +16,8 @@ const sortingQuestions = {
   question3: {
     question: "A troll has broken into the hall and everyone starts to run. You ...",
     g: "grab your wand and taunt the troll",
-    s: "incinerate the rope holding the chandelier over the troll with your wand",
-    r: "conjure some sheep, knowing you can lure the troll away by easily distracting it",
+    s: "incinerate the rope holding the chandelier over the troll",
+    r: "conjure some sheep to lure it away",
     h: "get everyone to work together to fight off the troll",
   },
   question4: {
