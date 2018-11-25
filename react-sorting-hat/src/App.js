@@ -3,6 +3,8 @@ import { createGlobalStyle } from "styled-components";
 import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import Sorting from "./components/Sorting";
+import House from './components/House';
+
 
 const GlobalStyle = createGlobalStyle`
   html, * {
@@ -23,6 +25,7 @@ class App extends Component {
         <GlobalStyle />
         <Route exact path="/" component={Home} />
         <Route exact path="/sorting" component={Sorting} />
+        <Route exact path="/house" component={House} />
       </div>
     );
   }

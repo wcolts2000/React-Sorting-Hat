@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import studyhall from "../images/study.jpg";
 import book from "../images/book.png";
@@ -165,6 +165,11 @@ const Button = styled.button`
   transition: all .3s ease-in;
   display: inline-block;
 
+  & a {
+    text-decoration: none;
+    color: inherit;
+  }
+
   &:hover {
     background: yellow;
     color: black;
@@ -210,8 +215,6 @@ export default class Sorting extends Component {
   
 
   handleSelection = e => {
-    const sortingForm = document.getElementById('form');
-    console.log(e.target);
     const answer = e.target.id
     e.target.selected=false
     this.setState(prevState => ({
@@ -300,7 +303,9 @@ export default class Sorting extends Component {
           <p>{this.state.ravenclaw}</p>
         </Points>
         <Book>
-          <Button>Your House Awaits</Button>
+          <Button>
+            <Link to='/House'>Your House Awaits</Link>
+            </Button>
         </Book>
         <a
           className="wallpaper-link"
