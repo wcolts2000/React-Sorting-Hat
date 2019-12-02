@@ -3,35 +3,33 @@ import styled from 'styled-components';
 import quill from '../images/quill.svg';
 
 function Quiz({questions, questionNumber, handleSelection}) {
-  const questionArr = Object.values(questions)[questionNumber];
+  const questionObj = Object.values(questions)[questionNumber];
   const houses = ['ravenclaw', 'gryffindor', 'hufflepuff', 'slytherin'];
   return (
     <>
       <Question>
         {
-          questionArr.question
+          questionObj.question
         }
       </Question>
       <Form onChange={handleSelection} name="answer" id="form">
         {houses.map((house, index) => (
           <FormGroup key={index}>
-          <Input
-            type="radio"
-            checked={false}
-            name="answer"
-            id={house}
-            className="form-input"
-          />
-          <FormLabel
-            htmlFor={house}
-            className="form-label"
-          >
-            <Span className="radio-button"></Span>
-            {
-              questionArr[house[0]]
-            }
-          </FormLabel>
-        </FormGroup>
+            <Input
+              type="radio"
+              checked={false}
+              name="answer"
+              id={house}
+              className="form-input"
+            />
+            <FormLabel
+              htmlFor={house}
+              className="form-label"
+            >
+              <Span className="radio-button" />
+              { questionObj[house[0]] }
+            </FormLabel>
+          </FormGroup>
         ))}
         
       </Form>
