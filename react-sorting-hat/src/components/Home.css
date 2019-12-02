@@ -8,14 +8,14 @@
     bottom: 0px
   }
   25% {
-    bottom: 10px
+    bottom: 50px
   } 
   50% {
     left: 55%;
     bottom: 0px
   } 
   75% {
-    bottom: 10px
+    bottom: 30px
   } 
   100% {
     left: 25%;
