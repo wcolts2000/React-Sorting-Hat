@@ -19,13 +19,19 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 class App extends Component {
+  state = {
+    winner: ""
+  }
+
+  selectWinner = winner => this.setState({winner})
+
   render() {
     return (
       <div className="App">
         <GlobalStyle />
         <Route exact path="/" component={Home} />
-        <Route exact path="/sorting" component={Sorting} />
-        <Route exact path="/house" component={House} />
+        <Route path="/sorting" render={(props) => <Sorting {...props} selectWinner={this.selectWinner}/>} />
+        <Route path="/house" render={(props) => <House {...props} winner={this.state.winner} />} />
       </div>
     );
   }

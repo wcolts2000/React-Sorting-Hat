@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import GryffindorCrest from '../images/gryffindor_flag_by_kooro_sama-d3ud5ym.png';
+import {Link} from 'react-router-dom';
 import houseData from './HouseData';
 
 // =========================
@@ -8,7 +8,6 @@ import houseData from './HouseData';
 // =========================
 
 const HouseDiv = styled.div`
-  background-image: url(${GryffindorCrest});
   background-color: red;
   padding: 2rem;
   height: 100vh;
@@ -66,21 +65,27 @@ const HouseDiv = styled.div`
 // ====     Globals     ====
 // =========================
 
-const houseInfo = houseData;
 
-export default function House(props) {
-  console.log(houseInfo.gryffindor);
+export default function House({winner}) {
+  console.log(houseData);
+  const colors = houseData[winner].colors,
+      traits = houseData[winner].traits,
+      wizards = houseData[winner].wizards;
   
   return (
-    <HouseDiv>
+    <HouseDiv style={{backgroundImage: `url(./img/${winner}.png)`}}>
       <Paper>
-        <h1>{`${Object.keys(houseInfo)[2]}`}</h1>
-        <h2>{`Your house colors are ${Object.values(houseInfo)[2].colors[0]} & ${Object.values(houseInfo)[2].colors[1]}`}</h2> <br />
-        <p>{`Valued Traits: ${houseInfo.gryffindor.traits.toString().split(',').join(', ')}.`}</p><br />
-        <p>{Object.values(houseInfo)[2].history}</p>
+        <h1>{winner}</h1>
+        <h2>{`Your house colors are ${colors[0]} & ${colors[1]}`}</h2>
         <br />
-        <p>{`Some famous wizards from this house: ${houseInfo.gryffindor.wizards.toString().split(',').join(', ')}`}</p>
+        <p>{`Valued Traits: ${traits.toString().split(',').join(', ')}.`}</p>
+        <br />
+        <p>{houseData[winner].history}</p>
+        <br />
+        <p>{`Some famous wizards from this house are ${wizards.toString().split(',').join(', ')}`}</p>
       </Paper>
+
+      <Link to="/" style={{textTransform: 'uppercase', background: 'black', marginTop: '30px', fontSize: '20px'}}>Start Over</Link>
 
       <a href="https://www.deviantart.com/kooro-sama/gallery/?catpath=/" rel="noopener noreferrer" target="_blank">Art from Kooro-Sama Deviant Art</a>
     </HouseDiv>

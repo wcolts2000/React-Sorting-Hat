@@ -63,7 +63,7 @@ const StyledImg = styled.img`
 
 const StyledButton = styled.button`
   padding: 1rem 2rem;
-  background: transparent;
+  background: rgba(0,0,0,.7);
   font-size: 1.6rem;
   border: 2px solid yellow;
   color: yellow;
@@ -101,7 +101,7 @@ export default function Home() {
       <StyledH1>Welcome</StyledH1>
       <Span>to</Span>
       <StyledH1 type="bottom">Hogwarts</StyledH1>
-      <StyledH2>What House Will You Be In ?</StyledH2>
+      <StyledH2>Let the Sorting Begin</StyledH2>
       <StyledImg src={hat} />
       <StyledButton>
         <Link to="/sorting">Come... Let's Find Your House</Link>

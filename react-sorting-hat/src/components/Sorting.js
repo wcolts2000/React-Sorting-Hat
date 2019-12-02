@@ -1,16 +1,102 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import studyhall from "../images/study.jpg";
-import book from "../images/book.png";
-import quill from "../images/quill.svg";
-import './Sorting.css'
+import React, { Component } from 'react';
+import styled from 'styled-components';
+import studyhall from '../images/study.jpg';
+import book from '../images/book.png';
+import quill from '../images/quill.svg';
+import './Sorting.css';
 import gryffindor from '../images/gryffindorCrest.png';
 import hufflepuff from '../images/hufflepuffCrest.png';
 import ravenclaw from '../images/ravenclawCrest.png';
 import slytherin from '../images/slytherinCrest.png';
 import sortingQuestions from './QuestionsData';
+import Quiz from './Quiz';
 
+// ====================
+// Component
+// ====================
+
+export default class Sorting extends Component {
+  constructor() {
+    super();
+    this.state = {
+      questions: sortingQuestions,
+      questionNumber: 0,
+      hufflepuff: 0,
+      ravenclaw: 0,
+      gryffindor: 0,
+      slytherin: 0
+    };    
+  }
+
+  handleSelection = e => {
+    const answer = e.target.id;
+    e.target.selected = false;
+    this.setState(prevState => ({
+      questionNumber: Number(prevState.questionNumber + 1),
+      [answer]: Number(prevState[answer] + 1)
+    }));
+  };
+
+  handleSorting = () => {
+    const houses = {
+      hufflepuff: this.state.hufflepuff,
+      ravenclaw: this.state.ravenclaw,
+      gryffindor: this.state.gryffindor,
+      slytherin: this.state.slytherin
+    }
+
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    // courtesy of https://stackoverflow.com/questions/27376295/getting-key-with-the-highest-value-from-object answer by polyccon
+    let maxSelected = Object.keys(houses).filter(x => {
+      return houses[x] === Math.max.apply(null, Object.values(houses))
+    })
+
+    if (maxSelected.length > 1) {
+      this.props.selectWinner(maxSelected[getRandomInt(maxSelected.length)])
+      this.props.history.push('/house')
+    } else {
+      this.props.selectWinner(maxSelected[0])
+      this.props.history.push('/house')
+    }
+
+    
+  }
+
+  render() {
+      return (
+        <SortingContainer>
+          <Crests>
+            <StyledImg src={gryffindor} alt="gryffindor crest" />
+            <StyledImg src={hufflepuff} alt="hufflepuff crest" />
+            <StyledImg src={slytherin} alt="slytherin crest" />
+            <StyledImg src={ravenclaw} alt="ravenclaw crest" />
+          </Crests>
+          <Book>
+            {
+              this.state.questionNumber <= 5
+              ?
+              <Quiz questions={this.state.questions} questionNumber={this.state.questionNumber} handleSelection={this.handleSelection} />
+              :
+              <Button onClick={this.handleSorting}>
+                Your House Awaits
+              </Button>
+            }
+          </Book>
+          <a
+            className="wallpaper-link"
+            href="https://harry-potter-sounds.ambient-mixer.com/images_template/7/5/a/75a04e9fe12e17379e429cf11bf9f298_full.jpg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Image from Harry Potter Sounds Ambient Mixer
+          </a>
+        </SortingContainer>
+      )
+  }
+}
 
 
 // ====================
@@ -26,7 +112,7 @@ const SortingContainer = styled.div`
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-around;
 
   & a.wallpaper-link {
     justify-self: flex-end;
@@ -61,60 +147,6 @@ const Book = styled.div`
   }
 `;
 
-const Question = styled.div`
-  width: 45%;
-  font-size: 1.2rem;
-  color: darkred;
-  font-family: "Amita", cursive;
-`;
-
-const Form = styled.form`
-  width: 48%;
-`;
-
-const Input = styled.input`
-  display: none;
-`;
-
-const FormGroup = styled.div`
-  width: 100%;
-  display: inline-block;
-`;
-
-const FormLabel = styled.label`
-  font-size: 1.4rem;
-  font-family: "Amita", cursive;
-  color: darkred;
-  position: relative;
-  padding-left: 2.5rem;
-  text-decoration: underline;
-  cursor: url(${quill}), auto;
-`;
-
-const Span = styled.span`
-  height: 1.5rem;
-  width: 1.5rem;
-  border: 5px solid darkred;
-  border-radius: 50%;
-  display: inline-block;
-  position: absolute;
-  left: 0.5rem;
-  top: .5rem;
-
-  &::after {
-    height: .5rem;
-    width: .5rem;
-    content: "";
-    display: block;
-    border-radius: 50%;
-    position: absolute;
-    top: 50%;
-    right: 50%;
-    transform: translate(50%, -50%);
-    background-color: darkred;
-    transition: opacity 0.2s;
-`;
-
 const Crests = styled.div`
   display: flex;
   justify-content: space-around;
@@ -140,20 +172,8 @@ const StyledImg = styled.img`
   width: 80px;
 `;
 
-const Points = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 30rem;
-  margin: 0 auto;
-  height: 5vh;
-  font-size: 1.4rem;
-  color: yellow;
-  flex-wrap: wrap;
-  align-items: flex-start;
-`;
-
 const Button = styled.button`
-  font-family: "Cinzel", serif;
+  font-family: 'Cinzel', serif;
   font-size: 1.2rem;
   font-weight: 700;
   border: 1px solid black;
@@ -162,159 +182,18 @@ const Button = styled.button`
   outline: none;
   background: wheat;
   padding: 20px;
-  transition: all .3s ease-in;
+  transition: all 0.3s ease-in;
   display: inline-block;
-
-  & a {
-    text-decoration: none;
-    color: inherit;
-  }
 
   &:hover {
     background: yellow;
     color: black;
     transform: translateY(-3px);
-    box-shadow: -1px 2px 7px rgba(0,0,0,0.3), -2px 3px 7px rgba(0,0,0,0.3);
+    box-shadow: -1px 2px 7px rgba(0, 0, 0, 0.3), -2px 3px 7px rgba(0, 0, 0, 0.3);
   }
 
   &:active {
     transform: translateY(-1px);
-    box-shadow: -1px 2px 6px rgba(0,0,0,0.4), -2px 3px 6px rgba(0,0,0,0.4)
+    box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.4), -2px 3px 6px rgba(0, 0, 0, 0.4);
   }
 `;
-
-// ====================
-// Globals
-// ====================
-
-const questions = sortingQuestions;
-
-// ====================
-// Component
-// ====================
-
-export default class Sorting extends Component {
-  constructor() {
-    super();
-    this.state = {
-      'questions': questions,
-      'questionNumber': 0,
-      'hufflepuff': 0,
-      'ravenclaw': 0,
-      'gryffindor': 0,
-      'slytherin': 0
-    };
-  }
-
-  // componentDidUpdate = () => {
-  //   const sortingForm = document.getElementById('form');
-  //   // if(this.state.questionNumber <= 5) sortingForm.reset();
-  //   if(sortingForm)return sortingForm.reset();
-  //   return null
-  // }
-  
-
-  handleSelection = e => {
-    const answer = e.target.id
-    e.target.selected=false
-    this.setState(prevState => ({
-      'questionNumber': Number(prevState.questionNumber+1),
-      [answer]: Number(prevState[answer]+1),
-    }))
-  }
-
-  render() {
-    // console.log(Object.values(this.state.questions)[this.state.questionNumber].question);
-    if(this.state.questionNumber <= 5 )
-    return (
-      <SortingContainer>
-        <Crests>
-          <StyledImg src={gryffindor} alt="gryffindor crest"/>
-          <StyledImg src={hufflepuff} alt="hufflepuff crest"/>
-          <StyledImg src={slytherin} alt="slytherin crest"/>
-          <StyledImg src={ravenclaw} alt="ravenclaw crest"/>
-        </Crests>
-        <Points>
-          <p>{this.state.gryffindor}</p>
-          <p>{this.state.hufflepuff}</p>
-          <p>{this.state.slytherin}</p>
-          <p>{this.state.ravenclaw}</p>
-        </Points>
-        <Book>
-          <Question>
-            {Object.values(this.state.questions)[this.state.questionNumber].question}
-          </Question>
-          <Form onChange={this.handleSelection} name="answer" id="form">
-            <FormGroup>
-              <Input type="radio" checked={false} name="answer" id="ravenclaw" className="form-input" refs="ravenclaw" />
-              <FormLabel htmlFor="ravenclaw" className="form-label" ref="ravenclaw">
-                <Span className="radio-button"></Span>
-              {Object.values(this.state.questions)[this.state.questionNumber].r}
-              </FormLabel>
-            </FormGroup>
-            <FormGroup>
-              <Input type="radio" checked={false} name="answer" id="gryffindor"className="form-input" ref="gryffindor" />
-              <FormLabel htmlFor="gryffindor" className="form-label">
-                <Span className="radio-button"></Span>
-                {Object.values(this.state.questions)[this.state.questionNumber].g}
-              </FormLabel>
-            </FormGroup>
-            <FormGroup>
-              <Input type="radio" checked={false} name="answer" id="hufflepuff" className="form-input" ref="hufflepuff" />
-              <FormLabel htmlFor="hufflepuff" className="form-label">
-                <Span className="radio-button"></Span>
-                {Object.values(this.state.questions)[this.state.questionNumber].h}
-              </FormLabel>
-            </FormGroup>
-            <FormGroup>
-              <Input type="radio" checked={false} name="answer" id="slytherin" className="form-input" ref="slytherin" />
-              <FormLabel htmlFor="slytherin" className="form-label">
-                <Span className="radio-button"></Span>
-                {Object.values(this.state.questions)[this.state.questionNumber].s}
-              </FormLabel>
-            </FormGroup>
-          </Form>
-        </Book>
-        <a
-          className="wallpaper-link"
-          href="https://harry-potter-sounds.ambient-mixer.com/images_template/7/5/a/75a04e9fe12e17379e429cf11bf9f298_full.jpg"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Image from Harry Potter Sounds Ambient Mixer
-        </a>
-      </SortingContainer>
-    ); else {
-      const houseArr = [`${this.state.gryffindor}gryffindor`, `${this.state.hufflepuff}hufflepuff`, `${this.state.slytherin}slytherin`, `${this.state.ravenclaw}ravenclaw`];
-      console.log(houseArr);
-      
-      return (
-    <SortingContainer>
-        <Crests>
-          <StyledImg src={gryffindor} alt="gryffindor crest"/>
-          <StyledImg src={hufflepuff} alt="hufflepuff crest"/>
-          <StyledImg src={slytherin} alt="slytherin crest"/>
-          <StyledImg src={ravenclaw} alt="ravenclaw crest"/>
-        </Crests>
-        <Points>
-          <p>{this.state.gryffindor}</p>
-          <p>{this.state.hufflepuff}</p>
-          <p>{this.state.slytherin}</p>
-          <p>{this.state.ravenclaw}</p>
-        </Points>
-        <Book>
-          <Button>
-            <Link to='/House'>Your House Awaits</Link>
-            </Button>
-        </Book>
-        <a
-          className="wallpaper-link"
-          href="https://harry-potter-sounds.ambient-mixer.com/images_template/7/5/a/75a04e9fe12e17379e429cf11bf9f298_full.jpg"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Image from Harry Potter Sounds Ambient Mixer
-        </a>
-      </SortingContainer>)}
-  }
-}
