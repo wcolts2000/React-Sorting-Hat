@@ -3,86 +3,37 @@ import styled from 'styled-components';
 import quill from '../images/quill.svg';
 
 function Quiz({questions, questionNumber, handleSelection}) {
+  const questionArr = Object.values(questions)[questionNumber];
+  const houses = ['ravenclaw', 'gryffindor', 'hufflepuff', 'slytherin'];
   return (
     <>
       <Question>
         {
-          Object.values(questions)[questionNumber]
-            .question
+          questionArr.question
         }
       </Question>
       <Form onChange={handleSelection} name="answer" id="form">
-        <FormGroup>
+        {houses.map((house, index) => (
+          <FormGroup key={index}>
           <Input
             type="radio"
             checked={false}
             name="answer"
-            id="ravenclaw"
+            id={house}
             className="form-input"
           />
           <FormLabel
-            htmlFor="ravenclaw"
+            htmlFor={house}
             className="form-label"
           >
             <Span className="radio-button"></Span>
             {
-              Object.values(questions)[
-                questionNumber
-              ].r
+              questionArr[house[0]]
             }
           </FormLabel>
         </FormGroup>
-        <FormGroup>
-          <Input
-            type="radio"
-            checked={false}
-            name="answer"
-            id="gryffindor"
-            className="form-input"
-          />
-          <FormLabel htmlFor="gryffindor" className="form-label">
-            <Span className="radio-button"></Span>
-            {
-              Object.values(questions)[
-                questionNumber
-              ].g
-            }
-          </FormLabel>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="radio"
-            checked={false}
-            name="answer"
-            id="hufflepuff"
-            className="form-input"
-          />
-          <FormLabel htmlFor="hufflepuff" className="form-label">
-            <Span className="radio-button"></Span>
-            {
-              Object.values(questions)[
-                questionNumber
-              ].h
-            }
-          </FormLabel>
-        </FormGroup>
-        <FormGroup>
-          <Input
-            type="radio"
-            checked={false}
-            name="answer"
-            id="slytherin"
-            className="form-input"
-          />
-          <FormLabel htmlFor="slytherin" className="form-label">
-            <Span className="radio-button"></Span>
-            {
-              Object.values(questions)[
-                questionNumber
-              ].s
-            }
-          </FormLabel>
-        </FormGroup>
+        ))}
+        
       </Form>
     </>
   )
