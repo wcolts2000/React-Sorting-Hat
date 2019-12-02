@@ -3,6 +3,8 @@ import styled from "styled-components";
 import img from "../images/train.jpg";
 import hat from "../images/sortingHat.png";
 import { Link } from "react-router-dom";
+import './Home.css'
+
 
 export default function Home() {
   return (
@@ -11,7 +13,7 @@ export default function Home() {
       <Span>to</Span>
       <StyledH1 type="bottom">Hogwarts</StyledH1>
       <StyledH2>Let the Sorting Begin</StyledH2>
-      <StyledImg src={hat} />
+      <StyledImg className="hat" src={hat} />
       <StyledButton to="/sorting">Come... Let's Find Your House
       </StyledButton>
     </StyledApp>

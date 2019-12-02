@@ -1,0 +1,25 @@
+.hat {
+  animation: wiggle 5s infinite 5s;
+}
+
+@keyframes wiggle {
+  0% {
+    left: 25%;
+    bottom: 0px
+  }
+  25% {
+    bottom: 10px
+  } 
+  50% {
+    left: 55%;
+    bottom: 0px
+  } 
+  75% {
+    bottom: 10px
+  } 
+  100% {
+    left: 25%;
+    bottom: 0px
+  }
+
+}
